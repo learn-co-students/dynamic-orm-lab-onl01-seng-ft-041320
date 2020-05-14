@@ -53,7 +53,11 @@ class InteractiveRecord
     attr_hash.map do |k,v|
       key = "#{k}"
       value = "#{v}"
+      if value.to_i.to_s == value
+        sql = "SELECT * FROM #{self.table_name} WHERE #{key} = #{value}"
+      else
       sql = "SELECT * FROM #{self.table_name} WHERE #{key} = '#{value}'"
+      end
       DB[:conn].execute(sql)
     end.first
   end
